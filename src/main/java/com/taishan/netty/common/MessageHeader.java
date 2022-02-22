@@ -6,6 +6,11 @@ import lombok.Data;
 public class MessageHeader {
 
     /**
+     * 协议开始
+     */
+    private short headStart;
+
+    /**
      * 数据包长度
      */
     private short length;
@@ -41,9 +46,7 @@ public class MessageHeader {
     private short checkSum;
 
     /**
-     * 结束码
+     * 协议结束
      */
-    private byte endCode;
-
-
+    private byte headEnd;
 }

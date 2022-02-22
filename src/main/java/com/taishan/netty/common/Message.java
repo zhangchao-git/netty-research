@@ -16,7 +16,7 @@ public abstract class Message<T extends MessageBody> {
 
     public void encode(ByteBuf byteBuf) {
         //TODO  怎样判断数据区长度,长度是否需要写出去, 起始、结束魔数是否需要写出去
-        byteBuf.writeShort(Constant.PROTOCOL_START);
+        byteBuf.writeShort(Constant.HEAD_START);
         byteBuf.writeShort(1);
         byteBuf.writeByte(messageHeader.getVersion());
         byteBuf.writeShort(messageHeader.getSerialNumber());
@@ -30,12 +30,13 @@ public abstract class Message<T extends MessageBody> {
 
         //结尾, 校验和
         byteBuf.writeShort(1);
-        byteBuf.writeShort(Constant.PROTOCOL_END);
+        byteBuf.writeShort(Constant.HEAD_END);
     }
 
     public abstract Class<T> getMessageBodyDecodeClass(int opcode);
 
     public void decode(ByteBuf msg) {
+        short headStart = msg.readShort();
         short length = msg.readShort();
         byte version = msg.readByte();
         short serialNumber = msg.readShort();
@@ -44,6 +45,7 @@ public abstract class Message<T extends MessageBody> {
         byte opCode = msg.readByte();
 
         MessageHeader messageHeader = new MessageHeader();
+        messageHeader.setHeadStart(headStart);
         messageHeader.setLength(length);
         messageHeader.setVersion(version);
         messageHeader.setSerialNumber(serialNumber);
@@ -56,11 +58,10 @@ public abstract class Message<T extends MessageBody> {
         messageBody.decode(bodyByteBuf);
 
         short checkSum = msg.readShort();
-        byte endCode = msg.readByte();
+        byte headEnd = msg.readByte();
         messageHeader.setCheckSum(checkSum);
-        messageHeader.setEndCode(endCode);
+        messageHeader.setHeadEnd(headEnd);
         this.messageHeader = messageHeader;
-
     }
 
 }
