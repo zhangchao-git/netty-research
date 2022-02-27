@@ -10,8 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-import static com.taishan.netty.constant.Constant.HEAD_END;
-import static com.taishan.netty.constant.Constant.OP_CODE_REGISTER;
+import static com.taishan.netty.constant.Constant.*;
 
 @Slf4j
 public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
@@ -47,6 +46,9 @@ public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
         short opCode = bb.getUnsignedByte(bb.readerIndex() + 9);
         switch (opCode) {
             case OP_CODE_REGISTER:
+                packet = new RegisterMsg(bb);
+                break;
+            case OP_CODE_HEARTBEAT:
                 packet = new RegisterMsg(bb);
                 break;
             default:
