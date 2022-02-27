@@ -1,15 +1,9 @@
-package com.taishan.netty.common;
+package com.taishan.netty.vo;
 
 import lombok.Data;
 
 @Data
-public class MessageHeader {
-
-    /**
-     * 协议开始
-     */
-    private short headStart;
-
+public class Header {
     /**
      * 数据包长度
      */
@@ -40,13 +34,4 @@ public class MessageHeader {
      */
     private byte opCode;
 
-    /**
-     * 校验和
-     */
-    private short checkSum;
-
-    /**
-     * 协议结束
-     */
-    private byte headEnd;
 }
