@@ -13,6 +13,8 @@ import io.netty.handler.logging.LoggingHandler;
 
 import java.util.concurrent.ExecutionException;
 
+import static com.taishan.netty.constant.Constant.OP_CODE_REGISTER;
+
 public class ClientV0 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
@@ -47,7 +49,7 @@ public class ClientV0 {
             requestMessage.getHeader().setSerialNumber((short) 2);
             requestMessage.getHeader().setReceiveAddr((short) 3);
             requestMessage.getHeader().setSendAddr((short) 4);
-            requestMessage.getHeader().setOpCode((byte) 80);
+            requestMessage.getHeader().setOpCode(OP_CODE_REGISTER);
             requestMessage.setSubstationAddr((byte) 58);
 
             channelFuture.channel().writeAndFlush(requestMessage);

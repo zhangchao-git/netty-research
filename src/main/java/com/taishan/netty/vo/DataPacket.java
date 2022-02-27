@@ -1,9 +1,6 @@
 package com.taishan.netty.vo;
 
-import com.taishan.netty.constant.Constant;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
-import io.netty.util.ReferenceCountUtil;
 import lombok.Data;
 
 /**
@@ -43,12 +40,12 @@ public class DataPacket {
     }
 
     protected void parseHead() {
-        header.setLength(payload.readShort());
-        header.setVersion(payload.readByte());
-        header.setSerialNumber(payload.readShort());
-        header.setReceiveAddr(payload.readShort());
-        header.setSendAddr(payload.readShort());
-        header.setOpCode(payload.readByte());
+        header.setLength(payload.readUnsignedShort());
+        header.setVersion(payload.readUnsignedByte());
+        header.setSerialNumber(payload.readUnsignedShort());
+        header.setReceiveAddr(payload.readUnsignedShort());
+        header.setSendAddr(payload.readUnsignedShort());
+        header.setOpCode(payload.readUnsignedByte());
     }
 
     /**

@@ -15,22 +15,22 @@ public interface Constant {
     /**
      * 发送方地址
      */
-    short SEND_ADDR = 0x55;
+    int SEND_ADDR = 0X5555;
 
     /**
      * 注册包
      */
-    byte OP_CODE_REGISTER = 80;
+    short OP_CODE_REGISTER = 0x80;
 
     /**
      * 心跳包
      */
-    byte OP_CODE_HEARTBEAT = 81;
+    short OP_CODE_HEARTBEAT = 0x81;
 
     /**
      * 分站数据包
      */
-    byte OP_CODE_SUBSTATION = 82;
+    short OP_CODE_SUBSTATION = 0x82;
 
 
 }

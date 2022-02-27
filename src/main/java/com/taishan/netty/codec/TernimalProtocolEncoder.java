@@ -14,18 +14,18 @@ public class TernimalProtocolEncoder extends MessageToMessageEncoder<DataPacket>
 
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, DataPacket dataPacket, List<Object> out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, DataPacket dataPacket, List<Object> out) {
         ByteBuf buffer = ctx.alloc().buffer();
 
         dataPacket.toByteBufMsg(buffer);
         buffer.markWriterIndex();//标记一下，先到前面去写覆盖的，然后回到标记写校验码
-        short bodyLen = (short) (buffer.readableBytes() - 10);//包体长度=总长度-头部长度
+        int bodyLen = buffer.readableBytes() - 10;//包体长度=总长度-头部长度
         buffer.writerIndex(0);
         buffer.writeShort(bodyLen);
         buffer.resetWriterIndex();
 
         //TODO CRC校验
-        buffer.writeShort(0);
+        buffer.writeShort(9);
         out.add(buffer);
         log.debug("<<<<<< TernimalProtocolEncoder: {},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(buffer));
 

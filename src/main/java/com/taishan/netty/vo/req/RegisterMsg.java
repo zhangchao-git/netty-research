@@ -13,7 +13,7 @@ public class RegisterMsg extends DataPacket {
     /**
      * 分站地址
      */
-    private byte substationAddr;
+    private int substationAddr;
 
     public RegisterMsg() {
     }
@@ -27,12 +27,12 @@ public class RegisterMsg extends DataPacket {
      */
     @Override
     protected void parseBody() {
-        this.substationAddr = this.payload.readByte();
+        this.substationAddr = this.payload.readUnsignedShort();
     }
 
     @Override
     public void toByteBufMsg(ByteBuf bb) {
         super.toByteBufMsg(bb);
-        bb.writeByte(substationAddr);
+        bb.writeShort(substationAddr);
     }
 }

@@ -13,21 +13,21 @@ import static com.taishan.netty.constant.Constant.HEAD_START;
 public class TernimalFrameDecoder extends LengthFieldBasedFrameDecoder {
 
     public TernimalFrameDecoder() {
-        super(Integer.MAX_VALUE, 2, 2, 12, 2);
+        super(Integer.MAX_VALUE, 1, 2, 11, 1);
     }
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         log.debug(">>>>>> TernimalFrameDecoder: ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(in));
-        //0XAA 开始
+        //AA 开始
         while (in.readableBytes() > 0) {
-            short headStart = in.getShort(in.readerIndex());
+            short headStart = in.getUnsignedByte(in.readerIndex());
             if (HEAD_START == headStart) {
                 break;
             }
-            in.readShort();
+            in.readUnsignedByte();
         }
-        if (in.readableBytes() < 16) {
+        if (in.readableBytes() < 14) {
             return null;
         }
         return super.decode(ctx, in);

@@ -30,12 +30,12 @@ public class TernimalFrameEncoder extends MessageToMessageEncoder<ByteBuf> {
      */
     public void escape(ByteBuf raw, ByteBuf buf) {
         int len = raw.readableBytes();
-        buf.writeShort(Constant.HEAD_START);
+        buf.writeByte(Constant.HEAD_START);
         while (len > 0) {
             byte b = raw.readByte();
             buf.writeByte(b);
             len--;
         }
-        buf.writeShort(Constant.HEAD_END);
+        buf.writeByte(Constant.HEAD_END);
     }
 }
