@@ -1,4 +1,4 @@
-package com.taishan.netty.server.codec;
+package com.taishan.netty.codec;
 
 
 import com.taishan.netty.constant.Constant;
