@@ -24,7 +24,7 @@ public class RegisterMsgHandler extends SimpleChannelInboundHandler<RegisterMsg>
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RegisterMsg msg) throws Exception {
-        FileUtil.appendUtf8String("注册包：" + msg.toString() + "/r/n", "C:/nettylog/" + DateUtil.formatDate(DateUtil.date()) + ".txt");
+        FileUtil.appendUtf8String("注册包：" + msg.toString() + "\n", "C:/nettylog/" + DateUtil.formatDate(DateUtil.date()) + ".txt");
         CommonResp commonResp = new CommonResp(msg);
         ctx.writeAndFlush(commonResp);
     }
