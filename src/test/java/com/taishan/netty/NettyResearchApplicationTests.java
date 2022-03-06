@@ -11,18 +11,20 @@ class NettyResearchApplicationTests {
 
     @Test
     void contextLoads() {
-//        00aa000102000300040005503a0006000d
-        ByteBuf bb = ByteBufAllocator.DEFAULT.heapBuffer();//在JT808Encoder escape()方法处回收
-        bb.writeShort(0xAA);
-        bb.writeShort(1);
-        bb.writeByte(2);
-        bb.writeShort(3);
-        bb.writeShort(4);
-        bb.writeShort(5);
-        bb.writeByte(80);
-        bb.writeByte(58);
-        bb.writeShort(6);
-        bb.writeShort(0x0D);
+//        注册包、心跳包 数据帧
+//        AA 00 02 02 00 03 00 04 00 05 81 00 3A 00 06 0D
+        ByteBuf bb = ByteBufAllocator.DEFAULT.heapBuffer();
+        bb.writeByte(0xAA);//开始魔数，1字节
+        bb.writeShort(2);//数据包长度，2字节
+        bb.writeByte(2);//协议版本号，1字节
+        bb.writeShort(3);//序列号，2字节
+        bb.writeShort(4);//接收方地址，2字节
+        bb.writeShort(5);//发送方地址，2字节
+        bb.writeByte(0x80);//命令码，1字节
+        bb.writeShort(58);//数据区
+        bb.writeShort(6);//校验和，2字节
+        bb.writeByte(0x0D);//结束码，1字节
+
         System.out.print(ByteBufUtil.hexDump(bb));
     }
 
