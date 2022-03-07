@@ -1,8 +1,11 @@
 package com.taishan.netty.vo.req;
 
+import lombok.Data;
+
 /**
  * 传感器数据
  */
+@Data
 public class SensorData {
 
     /**

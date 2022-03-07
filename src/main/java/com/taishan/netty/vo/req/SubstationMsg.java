@@ -7,6 +7,9 @@ import java.util.List;
 
 /**
  * 分站发送数据包
+ *
+ * TODO 层级不对，
+ *  子站-》检测仪器-》通道
  */
 @Data
 public class SubstationMsg extends DataPacket {
