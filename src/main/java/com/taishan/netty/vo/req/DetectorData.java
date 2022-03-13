@@ -2,6 +2,7 @@ package com.taishan.netty.vo.req;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +47,11 @@ public class DetectorData {
     private Short second;
 
     /**
+     * 节点类型/通道数量，拆分使用
+     */
+    private Short typeAndQty;
+
+    /**
      * 节点类型（前五位）
      */
     private Byte nodeType;
@@ -58,7 +64,7 @@ public class DetectorData {
     /**
      * 主板电量
      */
-    private Short motherboardPower;
+    private Short mainBoardPower;
 
     /**
      * 无线电量
@@ -68,7 +74,17 @@ public class DetectorData {
     /**
      * 通道数据/传感器数据
      */
-    private List<SensorData> sensorDataList;
+    private List<SensorData> sensorDataList = new ArrayList<>();
+
+    /**
+     * 节点类型-传感器数量赋值
+     */
+    public void setNodeTypeAndSensorQty() {
+        if (typeAndQty != null) {
+            this.nodeType = (byte) (typeAndQty >> 3);
+            this.sensorQty = (byte) (typeAndQty & 0x7);
+        }
+    }
 
 
 }

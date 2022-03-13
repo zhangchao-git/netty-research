@@ -2,6 +2,7 @@ package com.taishan.netty.server;
 
 import com.taishan.netty.codec.*;
 import com.taishan.netty.server.handler.RegisterMsgHandler;
+import com.taishan.netty.server.handler.SubstationMsgHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -47,6 +48,7 @@ public class Server {
                     pipeline.addLast(new LoggingHandler(LogLevel.INFO));
 
                     pipeline.addLast(new RegisterMsgHandler());
+                    pipeline.addLast(new SubstationMsgHandler());
                 }
             });
 

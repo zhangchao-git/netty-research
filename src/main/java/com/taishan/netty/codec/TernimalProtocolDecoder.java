@@ -2,6 +2,7 @@ package com.taishan.netty.codec;
 
 import com.taishan.netty.vo.DataPacket;
 import com.taishan.netty.vo.req.RegisterMsg;
+import com.taishan.netty.vo.req.SubstationMsg;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -50,6 +51,9 @@ public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
                 break;
             case OP_CODE_HEARTBEAT:
                 packet = new RegisterMsg(bb);
+                break;
+            case OP_CODE_SUBSTATION:
+                packet = new SubstationMsg(bb);
                 break;
             default:
                 packet = new DataPacket(bb);

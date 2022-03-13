@@ -2,6 +2,7 @@ package com.taishan.netty.vo.req;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,5 +24,5 @@ public class SubstationData {
     /**
      * 检测仪数据
      */
-    private List<DetectorData> detectorDataList;
+    private List<DetectorData> detectorDataList = new ArrayList<>();
 }

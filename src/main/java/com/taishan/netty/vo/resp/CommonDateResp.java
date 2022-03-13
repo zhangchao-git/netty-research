@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CommonResp extends DataPacket {
+public class CommonDateResp extends DataPacket {
 
     private byte year;
 
@@ -49,7 +49,7 @@ public class CommonResp extends DataPacket {
         bb.writeByte(second);
     }
 
-    public CommonResp(DataPacket dataPacket) {
+    public CommonDateResp(DataPacket dataPacket) {
         super.header.setVersion(dataPacket.getHeader().getVersion());
         super.header.setSerialNumber(dataPacket.getHeader().getSerialNumber());
         super.header.setReceiveAddr(dataPacket.getHeader().getSendAddr());
