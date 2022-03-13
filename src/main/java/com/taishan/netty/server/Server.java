@@ -1,6 +1,9 @@
 package com.taishan.netty.server;
 
-import com.taishan.netty.codec.*;
+import com.taishan.netty.codec.TernimalFrameDecoder;
+import com.taishan.netty.codec.TernimalFrameEncoder;
+import com.taishan.netty.codec.TernimalProtocolDecoder;
+import com.taishan.netty.codec.TernimalProtocolEncoder;
 import com.taishan.netty.server.handler.RegisterMsgHandler;
 import com.taishan.netty.server.handler.SubstationMsgHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -19,6 +22,8 @@ public class Server {
 
     /**
      * TODO 初始化改造
+     * TODO ByteBuf 手动管理
+     * TODO CRC校验
      *
      * @param args
      * @throws InterruptedException
