@@ -19,6 +19,8 @@ class NettyResearchApplicationTests {
 //        AA 00 02 02 00 03 00 04 00 05 81 00 3A 00 06 0D
 //        分站包
 //        aa001102000300040005820102010316030d160e15210506e830000700060d
+        //负数
+        //aa001102000300040005820102010316030d160e15210506e820000700060d
         ByteBuf bb = ByteBufAllocator.DEFAULT.heapBuffer();
         bb.writeByte(0xAA);//开始魔数，1字节
         bb.writeShort(17);//数据包长度，2字节
@@ -45,7 +47,7 @@ class NettyResearchApplicationTests {
         bb.writeByte(5);//主板电量 00100001
         bb.writeByte(6);//无线电量 00100001
         bb.writeByte(232);//通道编号/传感器类型 7/8 11101000
-        bb.writeByte(48);//小数点/正负号/预留位 1/1 00110000
+        bb.writeByte(32);//小数点/正负号/预留位 1/1 00100000
         bb.writeShort(7);//7
 
         bb.writeShort(6);//校验和，2字节

@@ -60,10 +60,13 @@ public class SensorData {
             this.decimalPoint = (byte) (computing >> 5);
             byte clacDenominator = this.decimalPoint;
             while (clacDenominator > 0) {
-                denominator = denominator * 10;
+                this.denominator = this.denominator * 10;
                 clacDenominator--;
             }
             this.sign = (byte) ((computing & 0x10) >> 4);
+            if(sign == 0){
+                this.denominator = - this.denominator;
+            }
         }
     }
 

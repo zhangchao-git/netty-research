@@ -74,7 +74,6 @@ public class SubstationMsg extends DataPacket {
                     SensorData sensorData = new SensorData();
                     sensorData.setNumAndType(this.payload.readUnsignedByte());
                     sensorData.setSensorNumAndSensorType();
-                    //TODO 正负号处理
                     sensorData.setComputing(this.payload.readUnsignedByte());
                     sensorData.setDecimalPointAndSign();
                     sensorData.setValue(this.payload.readUnsignedShort() / sensorData.getDenominator());

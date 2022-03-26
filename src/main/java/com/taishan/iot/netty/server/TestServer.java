@@ -21,8 +21,6 @@ import java.util.concurrent.ExecutionException;
 public class TestServer {
 
     /**
-     * TODO 初始化改造
-     * TODO ByteBuf 手动管理
      * TODO CRC校验
      *
      * @param args
