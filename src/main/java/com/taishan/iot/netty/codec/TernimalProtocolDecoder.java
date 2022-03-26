@@ -22,7 +22,7 @@ public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
         short headEnd = byteBuf.getUnsignedByte(byteBuf.writerIndex() - 1);
         byteBuf.writerIndex(byteBuf.writerIndex() - 1);
         if (headEnd != HEAD_END) {
-            log.warn("结束码错误,headEnd:{}", headEnd);
+            log.error("结束码错误,headEnd:{}", headEnd);
             return;
         }
 
