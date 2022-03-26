@@ -1,15 +1,18 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/fast?useUnicode=true&useSSL=false&characterEncoding=utf-8
+    url: jdbc:mysql://121.4.174.7:3306/fast?useUnicode=true&useSSL=false&characterEncoding=utf-8
     username: root
-    password: 123456
+    password: ENC(c3Csl1RZ0/+vEVFrO+sMsZe/xW19uawA)
 netty:
-  port: 9009
-  read-timeout: 15 #读超时 15分钟
+  port: 8082
+  read-timeout: 15
   threads:
     boss: 1
     worker: 4
-    business: 20 #业务线程数量
+    business: 20
+jasypt:
+  encryptor:
+    password: 998877
