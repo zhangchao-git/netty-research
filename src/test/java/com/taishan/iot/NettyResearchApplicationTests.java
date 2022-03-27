@@ -73,8 +73,13 @@ class NettyResearchApplicationTests {
 
     @Test
     public void bcd() {
-        byte[] s = BCD.strToBcd(22 + "");
-        System.out.print(s);
+        //字符串转BCD
+        for (int i = 0; i < 61; i++) {
+            byte[] s = BCD.strToBcd(i + "");
+
+            System.out.println(i + ":" + s[0]);
+            System.out.println(BCD.bcdToStr(s));
+        }
     }
 
 

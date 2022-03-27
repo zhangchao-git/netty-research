@@ -63,7 +63,12 @@ public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
                 packet = new DataPacket(bb);
                 break;
         }
-        packet.parse();
+        try {
+            packet.parse();
+        } catch (Exception e) {
+            log.error("解析失败：{}", e);
+        }
+
         return packet;
     }
 

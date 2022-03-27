@@ -29,7 +29,7 @@ public class CommonDateResp extends DataPacket {
         Date date = DateUtil.date();
         //获取年份后两位，超过2099年会有问题. but, i don't care
         int year = DateUtil.year(date) - 2000;
-        int month = DateUtil.month(date);
+        int month = DateUtil.month(date) + 1;
         int day = DateUtil.dayOfMonth(date);
         int hour = DateUtil.hour(date, true);
         int minute = DateUtil.minute(date);

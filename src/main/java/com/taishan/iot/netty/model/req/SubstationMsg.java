@@ -1,5 +1,6 @@
 package com.taishan.iot.netty.model.req;
 
+import cn.hutool.core.codec.BCD;
 import com.taishan.iot.netty.model.DataPacket;
 import io.netty.buffer.ByteBuf;
 import lombok.Data;
@@ -43,7 +44,7 @@ public class SubstationMsg extends DataPacket {
         for (int substationIndex = 0; substationQty > substationIndex; substationIndex++) {
             //子站数据
             SubstationData substationData = new SubstationData();
-            Short substationAddr = this.payload.readUnsignedByte();
+            int substationAddr = this.payload.readUnsignedShort();
             substationData.setSubstationAddr(substationAddr);
 
             //检测仪数量
@@ -55,16 +56,17 @@ public class SubstationMsg extends DataPacket {
                 DetectorData detectorData = new DetectorData();
                 if (detectorIndex != 0) {
                     //读取子站地址，检测仪器数量字段，暂时用不到
-                    this.payload.readUnsignedByte();
+                    this.payload.readUnsignedShort();
                     this.payload.readUnsignedByte();
                 }
-                detectorData.setDetectorAddr(this.payload.readUnsignedByte());
-                detectorData.setYear(this.payload.readUnsignedByte());
-                detectorData.setMonth(this.payload.readUnsignedByte());
-                detectorData.setDay(this.payload.readUnsignedByte());
-                detectorData.setHour(this.payload.readUnsignedByte());
-                detectorData.setMinute(this.payload.readUnsignedByte());
-                detectorData.setSecond(this.payload.readUnsignedByte());
+                detectorData.setDetectorAddr(this.payload.readUnsignedShort());
+
+                detectorData.setYear(BCD.bcdToStr(new byte[]{this.payload.readByte()}));
+                detectorData.setMonth(BCD.bcdToStr(new byte[]{this.payload.readByte()}));
+                detectorData.setDay(BCD.bcdToStr(new byte[]{this.payload.readByte()}));
+                detectorData.setHour(BCD.bcdToStr(new byte[]{this.payload.readByte()}));
+                detectorData.setMinute(BCD.bcdToStr(new byte[]{this.payload.readByte()}));
+                detectorData.setSecond(BCD.bcdToStr(new byte[]{this.payload.readByte()}));
                 detectorData.setTypeAndQty(this.payload.readUnsignedByte());
                 detectorData.setNodeTypeAndSensorQty();
                 detectorData.setMainBoardPower(this.payload.readUnsignedByte());

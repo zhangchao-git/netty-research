@@ -14,7 +14,7 @@ public class SubstationData {
     /**
      * 子站地址
      */
-    private Short substationAddr;
+    private Integer substationAddr;
 
     /**
      * 检测仪数量

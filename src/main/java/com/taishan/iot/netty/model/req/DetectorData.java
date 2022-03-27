@@ -14,37 +14,37 @@ public class DetectorData {
     /**
      * 检测仪地址
      */
-    private Short detectorAddr;
+    private Integer detectorAddr;
 
     /**
      * 年
      */
-    private Short year;
+    private String year;
 
     /**
      * 月
      */
-    private Short month;
+    private String month;
 
     /**
      * 日
      */
-    private Short day;
+    private String day;
 
     /**
      * 时
      */
-    private Short hour;
+    private String hour;
 
     /**
      * 分
      */
-    private Short minute;
+    private String minute;
 
     /**
      * 秒
      */
-    private Short second;
+    private String second;
 
     /**
      * 节点类型/通道数量，拆分使用
