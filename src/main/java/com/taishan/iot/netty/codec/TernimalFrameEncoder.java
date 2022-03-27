@@ -17,7 +17,7 @@ public class TernimalFrameEncoder extends MessageToMessageEncoder<ByteBuf> {
     protected void encode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
         ByteBuf buf = ctx.alloc().buffer();
         escape(msg, buf);
-        log.debug("<<<<<< TernimalFrameEncoder: {},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(buf));
+        log.error("<<<<<< TernimalFrameEncoder: {},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(buf));
         out.add(buf);
     }
 
@@ -36,6 +36,6 @@ public class TernimalFrameEncoder extends MessageToMessageEncoder<ByteBuf> {
             buf.writeByte(b);
             len--;
         }
-        buf.writeByte(Constant.HEAD_END);
+//        buf.writeByte(Constant.HEAD_END);
     }
 }

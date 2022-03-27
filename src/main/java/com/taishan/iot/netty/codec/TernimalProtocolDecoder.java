@@ -1,5 +1,6 @@
 package com.taishan.iot.netty.codec;
 
+import cn.hutool.core.io.checksum.crc16.CRC16Modbus;
 import com.taishan.iot.netty.model.DataPacket;
 import com.taishan.iot.netty.model.req.RegisterMsg;
 import com.taishan.iot.netty.model.req.SubstationMsg;
@@ -17,24 +18,27 @@ import static com.taishan.iot.netty.constant.Constant.*;
 public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) throws Exception {
-        log.debug(">>>>>> TernimalProtocolDecoder: ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(byteBuf));
+        log.error(">>>>>> TernimalProtocolDecoder: ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(byteBuf));
         // 结尾校验 0xOD
-        short headEnd = byteBuf.getUnsignedByte(byteBuf.writerIndex() - 1);
-        byteBuf.writerIndex(byteBuf.writerIndex() - 1);
-        if (headEnd != HEAD_END) {
-            log.error("结束码错误,headEnd:{}", headEnd);
-            return;
-        }
+//        short headEnd = byteBuf.getUnsignedByte(byteBuf.writerIndex() - 1);
+//        byteBuf.writerIndex(byteBuf.writerIndex() - 1);
+//        if (headEnd != HEAD_END) {
+//            log.error("结束码错误,headEnd:{}", headEnd);
+//            return;
+//        }
 
         int checkSum = byteBuf.getUnsignedShort(byteBuf.writerIndex() - 2);//排除校验码
         byteBuf.writerIndex(byteBuf.writerIndex() - 2);
-        //TODO CRC校验
-//        byte calCheckSum = JT808Util.XorSumBytes(escape);
-//        if (pkgCheckSum != calCheckSum) {
-//            log.warn("校验码错误,pkgCheckSum:{},calCheckSum:{}", pkgCheckSum, calCheckSum);
-//            ReferenceCountUtil.safeRelease(escape);
-//            return null;
-//        }
+        // CRC校验
+        byte[] body = new byte[byteBuf.readableBytes()];
+        byteBuf.getBytes(byteBuf.readerIndex(), body);
+
+        CRC16Modbus crc16 = new CRC16Modbus();
+        crc16.update(body);
+        if (crc16.getValue() != checkSum) {
+            log.warn("校验码错误,checkSum:{}", crc16);
+            return;
+        }
         DataPacket msg = parse(byteBuf);
 
         if (msg != null) {

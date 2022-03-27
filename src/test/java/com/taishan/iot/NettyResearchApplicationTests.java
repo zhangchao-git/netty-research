@@ -1,5 +1,7 @@
 package com.taishan.iot;
 
+import cn.hutool.core.codec.BCD;
+import cn.hutool.core.io.checksum.crc16.CRC16Modbus;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufUtil;
@@ -66,5 +68,25 @@ class NettyResearchApplicationTests {
         String password = textEncryptor.encrypt("123");
         System.out.println("username:" + username);
         System.out.println("password:" + password);
+    }
+
+
+    @Test
+    public void bcd() {
+        byte[] s = BCD.strToBcd(22 + "");
+        System.out.print(s);
+    }
+
+
+    @Test
+    public void crc() {
+        byte[] crc16_h = {
+                (byte) 0x00, (byte) 0x06, (byte) 0x01, (byte) 0x00, (byte) 0x01
+                , (byte) 0x00, (byte) 0x20, (byte) 0x55, (byte) 0x55, (byte) 0x80
+                , (byte) 0x22, (byte) 0x03, (byte) 0x16, (byte) 0x13, (byte) 0x04, (byte) 0x55
+        };
+        CRC16Modbus crc16 = new CRC16Modbus();
+        crc16.update(crc16_h);
+        System.out.print(crc16.getHexValue());
     }
 }

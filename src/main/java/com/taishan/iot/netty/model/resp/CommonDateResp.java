@@ -1,5 +1,6 @@
 package com.taishan.iot.netty.model.resp;
 
+import cn.hutool.core.codec.BCD;
 import cn.hutool.core.date.DateUtil;
 import com.taishan.iot.netty.model.DataPacket;
 import io.netty.buffer.ByteBuf;
@@ -41,12 +42,12 @@ public class CommonDateResp extends DataPacket {
         this.minute = (byte) minute;
         this.second = (byte) second;
 
-        bb.writeByte(year);
-        bb.writeByte(month);
-        bb.writeByte(day);
-        bb.writeByte(hour);
-        bb.writeByte(minute);
-        bb.writeByte(second);
+        bb.writeByte(BCD.strToBcd(year + "")[0]);
+        bb.writeByte(BCD.strToBcd(month + "")[0]);
+        bb.writeByte(BCD.strToBcd(day + "")[0]);
+        bb.writeByte(BCD.strToBcd(hour + "")[0]);
+        bb.writeByte(BCD.strToBcd(minute + "")[0]);
+        bb.writeByte(BCD.strToBcd(second + "")[0]);
     }
 
     public CommonDateResp(DataPacket dataPacket) {

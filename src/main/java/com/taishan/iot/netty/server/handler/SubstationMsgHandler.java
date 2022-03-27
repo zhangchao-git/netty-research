@@ -1,6 +1,5 @@
 package com.taishan.iot.netty.server.handler;
 
-import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.taishan.iot.dao.TestDao;
 import com.taishan.iot.model.entity.Test;
@@ -23,7 +22,7 @@ public class SubstationMsgHandler extends SimpleChannelInboundHandler<Substation
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, SubstationMsg msg) throws Exception {
-        log.debug(DateUtil.format(DateUtil.date(), DatePattern.NORM_DATETIME_FORMATTER) + " 分站数据包：" + msg.toString() + "\n");
+        log.error(" 分站数据包：" + msg.toString() + "\n");
         //存储数据
         Test test = new Test();
         test.setCrdate(DateUtil.date());

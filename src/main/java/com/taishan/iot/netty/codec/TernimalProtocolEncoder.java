@@ -1,5 +1,6 @@
 package com.taishan.iot.netty.codec;
 
+import cn.hutool.core.io.checksum.crc16.CRC16Modbus;
 import com.taishan.iot.netty.model.DataPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
@@ -25,9 +26,15 @@ public class TernimalProtocolEncoder extends MessageToMessageEncoder<DataPacket>
         buffer.resetWriterIndex();
 
         //TODO CRC校验
-        buffer.writeShort(9);
+        byte[] body = new byte[buffer.readableBytes()];
+        buffer.getBytes(buffer.readerIndex(), body);
+        CRC16Modbus crc16 = new CRC16Modbus();
+        crc16.update(body);
+
+
+        buffer.writeShort((int) crc16.getValue());
         out.add(buffer);
-        log.debug("<<<<<< TernimalProtocolEncoder: {},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(buffer));
+        log.error("<<<<<< TernimalProtocolEncoder: {},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(buffer));
 
     }
 }
