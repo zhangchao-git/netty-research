@@ -64,7 +64,7 @@ public class SensorData {
                 clacDenominator--;
             }
             this.sign = (byte) ((computing & 0x10) >> 4);
-            if(sign == 0){
+            if(sign == 1){
                 this.denominator = - this.denominator;
             }
         }

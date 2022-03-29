@@ -35,16 +35,16 @@ public class SubstationMsgHandler extends SimpleChannelInboundHandler<Substation
         for (SubstationData substationData : msg.getSubstationDataList()) {
             for (DetectorData detectorData : substationData.getDetectorDataList()) {
                 for (SensorData sensorData : detectorData.getSensorDataList()) {
-                    sql.append(
-                            StrUtil.format("子站地址:{}, 监测仪数量:{}, 监测仪地址:{}, 年:{}, 月:{}, 日:{}, 时:{}, 分:{}, 秒:{}, 节点类型:{}, 通道数量:{}, 主板电量:{},	" +
-                                            "无线电量:{}, 通道编号:{}, 传感器类型:{}, 小数点:{}, 正负号:{}, 测量值{}",
-                                    substationData.getSubstationAddr(), detectorData.getSensorQty(), detectorData.getDetectorAddr(),
-                                    detectorData.getYear(), detectorData.getMonth(), detectorData.getDay(),
-                                    detectorData.getHour(), detectorData.getMinute(), detectorData.getSecond(),
-                                    detectorData.getNodeType(), detectorData.getSensorQty(), detectorData.getMainBoardPower(), detectorData.getWirelessPower(),
-                                    sensorData.getSensorNum(), sensorData.getSensorType(), sensorData.getDecimalPoint(), sensorData.getSign(), sensorData.getValue()
-                            )
+                    String mes = StrUtil.format("子站地址:{}, 监测仪数量:{}, 监测仪地址:{}, 年:{}, 月:{}, 日:{}, 时:{}, 分:{}, 秒:{}, 节点类型:{}, 通道数量:{}, 主板电量:{},	" +
+                                    "无线电量:{}, 通道编号:{}, 传感器类型:{}, 小数点:{}, 正负号:{}, 测量值{}",
+                            substationData.getSubstationAddr(), substationData.getDetectorQty(), detectorData.getDetectorAddr(),
+                            detectorData.getYear(), detectorData.getMonth(), detectorData.getDay(),
+                            detectorData.getHour(), detectorData.getMinute(), detectorData.getSecond(),
+                            detectorData.getNodeType(), detectorData.getSensorQty(), detectorData.getMainBoardPower(), detectorData.getWirelessPower(),
+                            sensorData.getSensorNum(), sensorData.getSensorType(), sensorData.getDecimalPoint(), sensorData.getSign(), sensorData.getValue()
                     );
+                    sql.append(mes);
+                    System.out.println(mes);
                 }
             }
         }
