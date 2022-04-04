@@ -13,7 +13,7 @@ public class RegisterMsg extends DataPacket {
     /**
      * 分站地址
      */
-    private int substationAddr;
+    private Integer substationAddr;
 
     public RegisterMsg() {
     }

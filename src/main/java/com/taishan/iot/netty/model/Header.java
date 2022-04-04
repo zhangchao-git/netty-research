@@ -7,31 +7,31 @@ public class Header {
     /**
      * 数据包长度
      */
-    private int length;
+    private Integer length;
 
     /**
      * 协议版本号
      */
-    private short version = 1;
+    private Short version = 1;
 
     /**
      * 序列号
      */
-    private int serialNumber;
+    private Integer serialNumber;
 
     /**
      * 接收方地址
      */
-    private int receiveAddr;
+    private Integer receiveAddr;
 
     /**
      * 发送方地址
      */
-    private int sendAddr;
+    private Integer sendAddr;
 
     /**
      * 命令码
      */
-    private short opCode;
+    private Short opCode;
 
 }
