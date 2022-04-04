@@ -43,7 +43,6 @@ public class SubstationMsgHandler extends SimpleChannelInboundHandler<Substation
                 //TODO 拼写20XX年
                 String dateTimeStr = "20" + StrUtil.padPre(detectorData.getYear(), 2, "0") + "-" + StrUtil.padPre(detectorData.getMonth(), 2, "0") + "-" + StrUtil.padPre(detectorData.getDay(), 2, "0") + " "
                         + StrUtil.padPre(detectorData.getHour(), 2, "0") + ":" + StrUtil.padPre(detectorData.getMinute(), 2, "0") + ":" + StrUtil.padPre(detectorData.getSecond(), 2, "0");
-                log.error(dateTimeStr);
                 Date uploadDateTime = DateUtil.parse(dateTimeStr, DatePattern.NORM_DATETIME_FORMAT);
                 for (SensorData sensorData : detectorData.getSensorDataList()) {
 

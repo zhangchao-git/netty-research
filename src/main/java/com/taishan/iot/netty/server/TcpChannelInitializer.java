@@ -44,7 +44,7 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new TernimalProtocolEncoder());
         pipeline.addLast(new TernimalProtocolDecoder());
 
-        pipeline.addLast(new LoggingHandler(LogLevel.INFO));
+        pipeline.addLast(new LoggingHandler(LogLevel.ERROR));
 
         pipeline.addLast(businessGroup, registerMsgHandler);
         pipeline.addLast(businessGroup, substationMsgHandler);
