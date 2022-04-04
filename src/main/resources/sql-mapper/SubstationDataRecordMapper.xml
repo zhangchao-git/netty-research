@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taishan.iot.dao.SubstationDataRecordMapper">
+  <resultMap id="BaseResultMap" type="com.taishan.iot.model.entity.SubstationDataRecord">
+    <result column="send_addr" jdbcType="INTEGER" property="sendAddr" />
+    <result column="substation_addr" jdbcType="INTEGER" property="substationAddr" />
+    <result column="detector_qty" jdbcType="INTEGER" property="detectorQty" />
+    <result column="detector_addr" jdbcType="INTEGER" property="detectorAddr" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
+    <result column="node_type" jdbcType="INTEGER" property="nodeType" />
+    <result column="sensor_qty" jdbcType="INTEGER" property="sensorQty" />
+    <result column="main_board_power" jdbcType="INTEGER" property="mainBoardPower" />
+    <result column="wireless_power" jdbcType="INTEGER" property="wirelessPower" />
+    <result column="sensor_num" jdbcType="INTEGER" property="sensorNum" />
+    <result column="sensor_type" jdbcType="INTEGER" property="sensorType" />
+    <result column="data_value" jdbcType="DECIMAL" property="dataValue" />
+    <result column="crdate" jdbcType="TIMESTAMP" property="crdate" />
+  </resultMap>
+  <insert id="insertList" parameterType="com.taishan.iot.model.entity.SubstationDataRecord">
+    insert into substation_data_record (send_addr, substation_addr, detector_qty,
+      detector_addr, upload_time, node_type,
+      sensor_qty, main_board_power, wireless_power,
+      sensor_num, sensor_type, data_value,
+      crdate)
+    values
+    <foreach collection="rows" item="item" index="index" separator=",">
+      (#{item.sendAddr,jdbcType=INTEGER}, #{item.substationAddr,jdbcType=INTEGER}, #{item.detectorQty,jdbcType=INTEGER},
+      #{item.detectorAddr,jdbcType=INTEGER}, #{item.uploadTime,jdbcType=TIMESTAMP}, #{item.nodeType,jdbcType=INTEGER},
+      #{item.sensorQty,jdbcType=INTEGER}, #{item.mainBoardPower,jdbcType=INTEGER}, #{item.wirelessPower,jdbcType=INTEGER},
+      #{item.sensorNum,jdbcType=INTEGER}, #{item.sensorType,jdbcType=INTEGER}, #{item.dataValue,jdbcType=DECIMAL},
+      #{item.crdate,jdbcType=TIMESTAMP})
+    </foreach>
+
+
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select send_addr, substation_addr, detector_qty, detector_addr, upload_time, node_type,
+    sensor_qty, main_board_power, wireless_power, sensor_num, sensor_type, data_value,
+    crdate
+    from substation_data_record
+  </select>
+</mapper>

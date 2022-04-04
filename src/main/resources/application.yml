@@ -16,3 +16,6 @@ netty:
 jasypt:
   encryptor:
     password: 998877
+
+mybatis-plus:
+  mapper-locations: classpath:sql-mapper/*.xml

@@ -5,7 +5,6 @@ import com.taishan.iot.netty.model.DataPacket;
 import com.taishan.iot.netty.model.req.RegisterMsg;
 import com.taishan.iot.netty.model.req.SubstationMsg;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,7 @@ import static com.taishan.iot.netty.constant.Constant.*;
 public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) throws Exception {
-        log.error(">>>>>> TernimalProtocolDecoder: ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(byteBuf));
+//        log.error(">>>>>> TernimalProtocolDecoder: ip:{},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(byteBuf));
         // 结尾校验 0xOD
 //        short headEnd = byteBuf.getUnsignedByte(byteBuf.writerIndex() - 1);
 //        byteBuf.writerIndex(byteBuf.writerIndex() - 1);
@@ -36,7 +35,7 @@ public class TernimalProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
         CRC16Modbus crc16 = new CRC16Modbus();
         crc16.update(body);
         if (crc16.getValue() != checkSum) {
-            log.warn("校验码错误,checkSum:{}", crc16);
+            log.error("校验码错误,checkSum:{}", crc16);
             return;
         }
         DataPacket msg = parse(byteBuf);

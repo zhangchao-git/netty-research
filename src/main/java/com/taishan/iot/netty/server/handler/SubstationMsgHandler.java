@@ -1,9 +1,11 @@
 package com.taishan.iot.netty.server.handler;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.taishan.iot.dao.TestDao;
-import com.taishan.iot.model.entity.Test;
+import com.taishan.iot.dao.SubstationDataMapper;
+import com.taishan.iot.dao.SubstationDataRecordMapper;
+import com.taishan.iot.model.entity.SubstationDataRecord;
 import com.taishan.iot.netty.model.req.DetectorData;
 import com.taishan.iot.netty.model.req.SensorData;
 import com.taishan.iot.netty.model.req.SubstationData;
@@ -16,41 +18,49 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @Slf4j
 @Component
 @ChannelHandler.Sharable
 public class SubstationMsgHandler extends SimpleChannelInboundHandler<SubstationMsg> {
 
     @Autowired
-    private TestDao testDao;
+    private SubstationDataRecordMapper substationDataRecordMapper;
+
+    @Autowired
+    private SubstationDataMapper substationDataMapper;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, SubstationMsg msg) throws Exception {
-        log.error(" 分站数据包：" + msg.toString() + "\n");
+
+        List<SubstationDataRecord> recordList = new ArrayList<>();
         //存储数据
-        Test test = new Test();
-        test.setCrdate(DateUtil.date());
-        StringBuffer sql = new StringBuffer();
-        sql.append("子站数量:" + msg.getSubstationQty());
         for (SubstationData substationData : msg.getSubstationDataList()) {
             for (DetectorData detectorData : substationData.getDetectorDataList()) {
+                //TODO 拼写20XX年
+                String dateTimeStr = "20" + StrUtil.padPre(detectorData.getYear(), 2, "0") + "-" + StrUtil.padPre(detectorData.getMonth(), 2, "0") + "-" + StrUtil.padPre(detectorData.getDay(), 2, "0") + " "
+                        + StrUtil.padPre(detectorData.getHour(), 2, "0") + ":" + StrUtil.padPre(detectorData.getMinute(), 2, "0") + ":" + StrUtil.padPre(detectorData.getSecond(), 2, "0");
+                log.error(dateTimeStr);
+                Date uploadDateTime = DateUtil.parse(dateTimeStr, DatePattern.NORM_DATETIME_FORMAT);
                 for (SensorData sensorData : detectorData.getSensorDataList()) {
-                    String mes = StrUtil.format("子站地址:{}, 监测仪数量:{}, 监测仪地址:{}, 年:{}, 月:{}, 日:{}, 时:{}, 分:{}, 秒:{}, 节点类型:{}, 通道数量:{}, 主板电量:{},	" +
-                                    "无线电量:{}, 通道编号:{}, 传感器类型:{}, 小数点:{}, 正负号:{}, 测量值{}",
-                            substationData.getSubstationAddr(), substationData.getDetectorQty(), detectorData.getDetectorAddr(),
-                            detectorData.getYear(), detectorData.getMonth(), detectorData.getDay(),
-                            detectorData.getHour(), detectorData.getMinute(), detectorData.getSecond(),
-                            detectorData.getNodeType(), detectorData.getSensorQty(), detectorData.getMainBoardPower(), detectorData.getWirelessPower(),
-                            sensorData.getSensorNum(), sensorData.getSensorType(), sensorData.getDecimalPoint(), sensorData.getSign(), sensorData.getValue()
+
+                    SubstationDataRecord data = new SubstationDataRecord(
+                            msg.getHeader().getSendAddr(), substationData.getSubstationAddr(), substationData.getDetectorQty(),
+                            detectorData.getDetectorAddr(), uploadDateTime, detectorData.getNodeType(),
+                            detectorData.getSensorQty(), detectorData.getMainBoardPower(), detectorData.getWirelessPower(),
+                            sensorData.getSensorNum(), sensorData.getSensorType(), sensorData.getValue(), DateUtil.date()
                     );
-                    sql.append(mes);
-                    System.out.println(mes);
+                    recordList.add(data);
                 }
             }
         }
 
-        test.setData(sql.toString());
-        testDao.insert(test);
+        substationDataRecordMapper.insertList(recordList);
+        substationDataMapper.deleteBySendAddr(msg.getHeader().getSendAddr());
+        substationDataMapper.insertList(recordList);
 
         CommonByteResp commonDateResp = new CommonByteResp(msg);
         ctx.writeAndFlush(commonDateResp);

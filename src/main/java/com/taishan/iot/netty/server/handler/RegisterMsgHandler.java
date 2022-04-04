@@ -1,8 +1,8 @@
 package com.taishan.iot.netty.server.handler;
 
 import cn.hutool.core.date.DateUtil;
-import com.taishan.iot.dao.TestDao;
-import com.taishan.iot.model.entity.Test;
+import com.taishan.iot.dao.RegisterHeartbeatRecordMapper;
+import com.taishan.iot.model.entity.RegisterHeartbeatRecord;
 import com.taishan.iot.netty.model.req.RegisterMsg;
 import com.taishan.iot.netty.model.resp.CommonDateResp;
 import io.netty.channel.ChannelHandler;
@@ -18,16 +18,16 @@ import org.springframework.stereotype.Component;
 public class RegisterMsgHandler extends SimpleChannelInboundHandler<RegisterMsg> {
 
     @Autowired
-    private TestDao testDao;
+    private RegisterHeartbeatRecordMapper registerHeartbeatRecordMapper;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RegisterMsg msg) throws Exception {
-        log.error(" 注册包：" + msg.toString() + "\n");
         //存储数据
-        Test test = new Test();
-        test.setCrdate(DateUtil.date());
-        test.setData(msg.toString());
-        testDao.insert(test);
+        RegisterHeartbeatRecord record = new RegisterHeartbeatRecord();
+        record.setCrdate(DateUtil.date());
+        record.setOpCode(msg.getHeader().getOpCode());
+        record.setSubstationAddr(msg.getSubstationAddr());
+        registerHeartbeatRecordMapper.insert(record);
 
         CommonDateResp commonDateResp = new CommonDateResp(msg);
         ctx.writeAndFlush(commonDateResp);

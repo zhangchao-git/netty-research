@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taishan.iot.dao.RegisterHeartbeatRecordMapper">
+
+  <resultMap id="BaseResultMap" type="com.taishan.iot.model.entity.RegisterHeartbeatRecord">
+    <result column="substation_addr" jdbcType="INTEGER" property="substationAddr" />
+    <result column="op_code" jdbcType="INTEGER" property="opCode" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
+    <result column="crdate" jdbcType="TIMESTAMP" property="crdate" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.taishan.iot.model.entity.RegisterHeartbeatRecord">
+    insert into register_heartbeat_record (substation_addr, op_code, upload_time,
+      crdate)
+    values (#{substationAddr,jdbcType=INTEGER}, #{opCode,jdbcType=INTEGER}, #{uploadTime,jdbcType=TIMESTAMP},
+      #{crdate,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select substation_addr, op_code, upload_time, crdate
+    from register_heartbeat_record
+  </select>
+</mapper>

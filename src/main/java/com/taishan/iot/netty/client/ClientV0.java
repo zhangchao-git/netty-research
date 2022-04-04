@@ -48,12 +48,12 @@ public class ClientV0 {
             channelFuture.sync();
 
             RegisterMsg requestMessage = new RegisterMsg();
-            requestMessage.getHeader().setVersion((byte) 1);
-            requestMessage.getHeader().setSerialNumber((short) 2);
-            requestMessage.getHeader().setReceiveAddr((short) 3);
-            requestMessage.getHeader().setSendAddr((short) 4);
+            requestMessage.getHeader().setVersion((short) 1);
+            requestMessage.getHeader().setSerialNumber(2);
+            requestMessage.getHeader().setReceiveAddr(3);
+            requestMessage.getHeader().setSendAddr(4);
             requestMessage.getHeader().setOpCode(OP_CODE_REGISTER);
-            requestMessage.setSubstationAddr((byte) 58);
+            requestMessage.setSubstationAddr(58);
 
             channelFuture.channel().writeAndFlush(requestMessage);
 

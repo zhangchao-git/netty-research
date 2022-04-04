@@ -3,7 +3,6 @@ package com.taishan.iot.netty.codec;
 
 import com.taishan.iot.netty.constant.Constant;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ public class TernimalFrameEncoder extends MessageToMessageEncoder<ByteBuf> {
     protected void encode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
         ByteBuf buf = ctx.alloc().buffer();
         escape(msg, buf);
-        log.error("<<<<<< TernimalFrameEncoder: {},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(buf));
+//        log.error("<<<<<< TernimalFrameEncoder: {},hex:{}\n", ctx.channel().remoteAddress(), ByteBufUtil.hexDump(buf));
         out.add(buf);
     }
 
