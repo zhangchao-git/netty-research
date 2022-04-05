@@ -10,13 +10,13 @@
   </resultMap>
 
   <insert id="insert" parameterType="com.taishan.iot.model.entity.RegisterHeartbeatRecord">
-    insert into register_heartbeat_record (substation_addr, op_code, upload_time,
+    insert into bu_register_heartbeat_record (substation_addr, op_code, upload_time,
       crdate)
     values (#{substationAddr,jdbcType=INTEGER}, #{opCode,jdbcType=INTEGER}, #{uploadTime,jdbcType=TIMESTAMP},
       #{crdate,jdbcType=TIMESTAMP})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
     select substation_addr, op_code, upload_time, crdate
-    from register_heartbeat_record
+    from bu_register_heartbeat_record
   </select>
 </mapper>

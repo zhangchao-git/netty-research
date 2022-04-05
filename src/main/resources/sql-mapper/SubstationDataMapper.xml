@@ -17,7 +17,7 @@
     <result column="crdate" jdbcType="TIMESTAMP" property="crdate" />
   </resultMap>
   <insert id="insertList" parameterType="com.taishan.iot.model.entity.SubstationDataRecord">
-    insert into substation_data (send_addr, substation_addr, detector_qty,
+    insert into bu_substation_data (send_addr, substation_addr, detector_qty,
       detector_addr, upload_time, node_type,
       sensor_qty, main_board_power, wireless_power,
       sensor_num, sensor_type, data_value,
@@ -36,10 +36,10 @@
     select send_addr, substation_addr, detector_qty, detector_addr, upload_time, node_type,
     sensor_qty, main_board_power, wireless_power, sensor_num, sensor_type, data_value,
     crdate
-    from substation_data
+    from bu_substation_data
   </select>
 
   <delete id="deleteBySendAddr">
-    delete from substation_data where  send_addr = #{sendAddr,jdbcType=INTEGER}
+    delete from bu_substation_data where  send_addr = #{sendAddr,jdbcType=INTEGER}
   </delete>
 </mapper>
