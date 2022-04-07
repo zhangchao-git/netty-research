@@ -1,4 +1,7 @@
 
+--数据库字符集：utf8mb4
+--排序规则：utf8mb4_general_ci
+
 CREATE TABLE `substation_data_record`  (
   `send_addr` int(11) NULL DEFAULT NULL COMMENT '发送方地址/分站地址',
   `substation_addr` int(11) NULL DEFAULT NULL COMMENT '子站地址',
